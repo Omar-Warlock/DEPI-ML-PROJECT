@@ -1,0 +1,61 @@
+# Python bytecode and cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Test / coverage artifacts
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE/editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment variables and secrets
+.env
+.env.*
+*.local
+
+# ML data artifacts (keep folder structure, ignore generated content)
+ML/data/raw/*
+ML/data/processed/*
+ML/data/features/*
+
+# Keep data directories in git even when empty
+!ML/data/raw/.gitkeep
+!ML/data/processed/.gitkeep
+!ML/data/features/.gitkeep
+
+# Trained models and experiment outputs
+ML/models/*
+!ML/models/.gitkeep
+
+# Notebook outputs and temporary downloads
+*.crdownload
