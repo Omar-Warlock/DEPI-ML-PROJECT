@@ -40,6 +40,11 @@ MODEL_READY_COLUMNS = MODEL_FEATURE_COLUMNS + [
     "value_per_rating",
 ]
 
+# Conservative quantile winsorization for valid but extreme values.
+OUTLIER_WINSOR_CONFIG: Dict[str, Dict[str, float]] = {
+    "market_value_eur": {"lower": 0.01, "upper": 0.99},
+}
+
 RAW_REQUIRED_COLUMNS = [
     "player_id",
     "fifa_version",
@@ -201,6 +206,49 @@ def build_position_group(player_positions: pd.Series) -> pd.Series:
     return primary.map(mapping)
 
 
+def winsorize_columns(
+    df: pd.DataFrame,
+    config: Dict[str, Dict[str, float]],
+) -> Tuple[pd.DataFrame, Dict[str, Dict[str, float]]]:
+    df = df.copy()
+    summary: Dict[str, Dict[str, float]] = {}
+
+    for col, bounds in config.items():
+        if col not in df.columns:
+            continue
+
+        lower_q = float(bounds["lower"])
+        upper_q = float(bounds["upper"])
+        if not (0.0 <= lower_q < upper_q <= 1.0):
+            raise ValueError(
+                f"Invalid winsorization quantiles for '{col}': "
+                f"lower={lower_q}, upper={upper_q}"
+            )
+
+        series = pd.to_numeric(df[col], errors="coerce")
+        valid = series.dropna()
+        if valid.empty:
+            continue
+
+        lower_bound = float(valid.quantile(lower_q))
+        upper_bound = float(valid.quantile(upper_q))
+        lower_clipped_rows = int((series < lower_bound).sum())
+        upper_clipped_rows = int((series > upper_bound).sum())
+
+        df[col] = series.clip(lower=lower_bound, upper=upper_bound)
+        summary[col] = {
+            "lower_quantile": lower_q,
+            "upper_quantile": upper_q,
+            "lower_bound": lower_bound,
+            "upper_bound": upper_bound,
+            "lower_clipped_rows": lower_clipped_rows,
+            "upper_clipped_rows": upper_clipped_rows,
+            "total_clipped_rows": lower_clipped_rows + upper_clipped_rows,
+        }
+
+    return df, summary
+
+
 def preprocess_fifa_dataframe(df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame, dict]:
     df = df.copy()
 
@@ -246,15 +294,16 @@ def preprocess_fifa_dataframe(df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFr
     for skill_col in ["pace", "shooting", "passing", "dribbling", "defending", "physic"]:
         df = df[df[skill_col].between(0, 99)]
 
-    # Step 5: Remove/clip extreme outliers.
-    upper_clip = df["market_value_eur"].quantile(0.995)
-    df["market_value_eur"] = df["market_value_eur"].clip(upper=upper_clip)
-
-    # Feature engineering.
+    # Step 5: Feature engineering.
     df["age_potential_gap"] = df["potential"] - df["overall"]
     df["value_per_rating"] = df["market_value_eur"] / (df["overall"] + 1.0)
     df["position_group"] = build_position_group(df["player_positions"])
     df = df[df["position_group"].notna()].copy()
+
+    # Step 6: Winsorize selected skewed columns to limit extreme leverage.
+    df, winsor_summary = winsorize_columns(df, OUTLIER_WINSOR_CONFIG)
+    # Keep derived feature definition consistent after target winsorization.
+    df["value_per_rating"] = df["market_value_eur"] / (df["overall"] + 1.0)
 
     dummies = pd.get_dummies(df["position_group"], prefix="position_group", dtype=int)
     for required_dummy in [
@@ -305,8 +354,7 @@ def preprocess_fifa_dataframe(df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFr
         "post_clean_shape": {"rows": int(players_clean.shape[0]), "columns": int(players_clean.shape[1])},
         "model_ready_shape": {"rows": int(model_ready.shape[0]), "columns": int(model_ready.shape[1])},
         "dropped_high_missing_columns": high_missing_cols,
-        "market_value_clip_quantile": 0.995,
-        "market_value_clip_upper": float(upper_clip),
+        "winsorization": winsor_summary,
         "nulls_in_model_ready": int(model_ready.isna().sum().sum()),
     }
 
