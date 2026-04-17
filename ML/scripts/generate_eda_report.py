@@ -32,6 +32,7 @@ REQUIRED_PLAYERS_CLEAN_COLUMNS = [
     "defending",
     "physic",
     "age_potential_gap",
+    "is_at_peak",
     "value_per_rating",
 ]
 
@@ -128,11 +129,22 @@ def iqr_outlier_summary(series: pd.Series) -> Dict[str, float]:
 def compute_feature_checks(players_clean: pd.DataFrame, model_ready: pd.DataFrame) -> Dict[str, object]:
     age_gap_expected = players_clean["potential"] - players_clean["overall"]
     age_gap_mismatch_rows = int((players_clean["age_potential_gap"] != age_gap_expected).sum())
+    age_gap_zero_rows = int((players_clean["age_potential_gap"] == 0).sum())
+
+    expected_is_at_peak = (players_clean["age_potential_gap"] == 0).astype(int)
+    is_at_peak_mismatch_rows = int((players_clean["is_at_peak"] != expected_is_at_peak).sum())
+    is_at_peak_share = float(players_clean["is_at_peak"].mean()) if len(players_clean) else 0.0
 
     expected_value_per_rating = players_clean["market_value_eur"] / (players_clean["overall"] + 1.0)
     value_per_rating_diff = (players_clean["value_per_rating"] - expected_value_per_rating).abs()
     value_per_rating_mismatch_rows = int((value_per_rating_diff > 1e-9).sum())
     value_per_rating_nonfinite_rows = int((~np.isfinite(players_clean["value_per_rating"])).sum())
+
+    nonpositive_market_value_rows = int((players_clean["market_value_eur"] <= 0).sum())
+    low_value_threshold_eur = 10_000.0
+    low_value_rows_at_or_below_threshold = int(
+        (players_clean["market_value_eur"] <= low_value_threshold_eur).sum()
+    )
 
     one_hot_missing_columns = [
         col for col in POSITION_DUMMY_COLUMNS if col not in model_ready.columns
@@ -156,8 +168,14 @@ def compute_feature_checks(players_clean: pd.DataFrame, model_ready: pd.DataFram
 
     return {
         "age_potential_gap_mismatch_rows": age_gap_mismatch_rows,
+        "age_potential_gap_zero_rows": age_gap_zero_rows,
+        "is_at_peak_mismatch_rows": is_at_peak_mismatch_rows,
+        "is_at_peak_share": is_at_peak_share,
         "value_per_rating_mismatch_rows": value_per_rating_mismatch_rows,
         "value_per_rating_nonfinite_rows": value_per_rating_nonfinite_rows,
+        "nonpositive_market_value_rows": nonpositive_market_value_rows,
+        "low_value_threshold_eur": low_value_threshold_eur,
+        "low_value_rows_at_or_below_threshold": low_value_rows_at_or_below_threshold,
         "one_hot_missing_columns": one_hot_missing_columns,
         "one_hot_invalid_rows": one_hot_invalid_rows,
         "range_checks": range_checks,
@@ -280,13 +298,34 @@ def report_to_markdown(report: Dict[str, object]) -> str:
         f"- age_potential_gap mismatches: {feature_checks['age_potential_gap_mismatch_rows']}"
     )
     lines.append(
+        f"- age_potential_gap == 0 rows: {feature_checks['age_potential_gap_zero_rows']}"
+    )
+    lines.append(
+        f"- is_at_peak mismatches: {feature_checks['is_at_peak_mismatch_rows']}"
+    )
+    lines.append(
+        f"- is_at_peak share: {feature_checks['is_at_peak_share']:.2%}"
+    )
+    lines.append(
         f"- value_per_rating mismatches: {feature_checks['value_per_rating_mismatch_rows']}"
     )
     lines.append(
         f"- value_per_rating non-finite rows: {feature_checks['value_per_rating_nonfinite_rows']}"
     )
+    lines.append(
+        f"- non-positive market_value_eur rows: {feature_checks['nonpositive_market_value_rows']}"
+    )
+    lines.append(
+        "- low-value market_value_eur rows "
+        f"(<= {feature_checks['low_value_threshold_eur']:.0f}): "
+        f"{feature_checks['low_value_rows_at_or_below_threshold']}"
+    )
     lines.append(f"- one-hot missing columns: {feature_checks['one_hot_missing_columns']}")
     lines.append(f"- one-hot invalid rows: {feature_checks['one_hot_invalid_rows']}")
+    lines.append(
+        "- position_group is one-hot encoded as: "
+        f"{POSITION_DUMMY_COLUMNS}"
+    )
     lines.append("")
     lines.append("## Strongest Correlations with log_value")
     top_items = list(correlations.items())[:10]

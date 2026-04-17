@@ -21,6 +21,7 @@ MODEL_FEATURE_COLUMNS = [
     "overall",
     "potential",
     "age_potential_gap",
+    "is_at_peak",
     "pace",
     "shooting",
     "passing",
@@ -283,9 +284,13 @@ def preprocess_fifa_dataframe(df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFr
     enforce_required_columns(df, required_base_columns)
 
     # Step 4: Parse market value and filter unusable rows.
+    pre_market_rows = int(df.shape[0])
     df["market_value_eur"] = df["value_eur"].apply(parse_market_value)
+    missing_market_value_rows = int(df["market_value_eur"].isna().sum())
+    nonpositive_market_value_rows = int((df["market_value_eur"] <= 0).sum())
     df = df[df["market_value_eur"].notna()].copy()
     df = df[df["market_value_eur"] > 0].copy()
+    removed_market_value_rows = pre_market_rows - int(df.shape[0])
 
     # Additional quality filters from the data contract ranges.
     df = df[df["age"].between(15, 45)]
@@ -296,6 +301,8 @@ def preprocess_fifa_dataframe(df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFr
 
     # Step 5: Feature engineering.
     df["age_potential_gap"] = df["potential"] - df["overall"]
+    # Peak indicator distinguishes players who already reached potential.
+    df["is_at_peak"] = (df["age_potential_gap"] == 0).astype(int)
     df["value_per_rating"] = df["market_value_eur"] / (df["overall"] + 1.0)
     df["position_group"] = build_position_group(df["player_positions"])
     df = df[df["position_group"].notna()].copy()
@@ -344,6 +351,7 @@ def preprocess_fifa_dataframe(df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFr
         "defending",
         "physic",
         "age_potential_gap",
+        "is_at_peak",
         "value_per_rating",
     ]
     players_clean = df[clean_columns].copy()
@@ -354,6 +362,15 @@ def preprocess_fifa_dataframe(df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFr
         "post_clean_shape": {"rows": int(players_clean.shape[0]), "columns": int(players_clean.shape[1])},
         "model_ready_shape": {"rows": int(model_ready.shape[0]), "columns": int(model_ready.shape[1])},
         "dropped_high_missing_columns": high_missing_cols,
+        "market_value_quality": {
+            "missing_market_value_rows": missing_market_value_rows,
+            "nonpositive_market_value_rows": nonpositive_market_value_rows,
+            "removed_market_value_rows": removed_market_value_rows,
+        },
+        "is_at_peak": {
+            "count": int(df["is_at_peak"].sum()),
+            "share": float(df["is_at_peak"].mean()) if len(df) else 0.0,
+        },
         "winsorization": winsor_summary,
         "nulls_in_model_ready": int(model_ready.isna().sum().sum()),
     }
