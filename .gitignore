@@ -45,8 +45,6 @@ Thumbs.db
 
 # ML data artifacts (keep folder structure, ignore generated content)
 ML/data/raw/*
-ML/data/processed/*
-ML/data/features/*
 
 # Keep data directories in git even when empty
 !ML/data/raw/.gitkeep
