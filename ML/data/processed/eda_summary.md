@@ -1,6 +1,6 @@
 # FIFA EDA and Feature Validation Summary
 
-Generated at (UTC): 2026-04-17T18:22:55.575029+00:00
+Generated at (UTC): 2026-04-27T11:54:29.197302+00:00
 
 ## Dataset Overview
 - players_clean rows/cols: 20621 / 16
