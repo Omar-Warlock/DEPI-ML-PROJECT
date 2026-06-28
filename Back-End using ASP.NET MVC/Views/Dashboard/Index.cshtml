@@ -1,0 +1,313 @@
+﻿@using System.Linq
+@model ScoutIQ.ViewModels.DashboardViewModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scout IQ Dashboard</title>
+
+    <link rel="stylesheet" href="~/css/index.css">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <div class="logo">
+                <h2>SCOUT IQ</h2>
+                <span>ELITE INTELLIGENCE</span>
+            </div>
+
+            <ul class="menu">
+
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-table-columns"></i>
+                        Dashboard
+                    </a>
+                </li>
+
+                <li class="active">
+                    <a href="#">
+                        <i class="fa-solid fa-users"></i>
+                        Players
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-chart-line"></i>
+                        Market Analysis
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-file-lines"></i>
+                        Scouting Reports
+                    </a>
+                </li>
+
+            </ul>
+
+            <div class="settings">
+                <a href="#">
+                    <i class="fa-solid fa-gear"></i>
+                    Settings
+                </a>
+            </div>
+
+        </aside>
+
+        <!-- Main Content -->
+
+        <main class="content">
+
+            <!-- Navbar -->
+
+            <nav class="navbar">
+
+                <div class="search-box">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input type="text" placeholder="Search elite talent, clubs or regions...">
+
+                </div>
+
+                <div class="nav-right">
+
+                    <i class="fa-solid fa-bell"></i>
+
+                    <i class="fa-solid fa-circle-question"></i>
+
+                    <div class="profile">
+
+                        <img src="https://i.pravatar.cc/50" alt="">
+
+                        <div>
+
+                            <h4>Chief Scout</h4>
+
+                            <span>Premium Account</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </nav>
+
+            <!-- Header -->
+
+            <section class="header">
+
+                <div>
+
+                    <h1>Player Intelligence Database</h1>
+
+                    <p>Cross-referencing 42,000+ professional profiles with clinical precision.</p>
+
+                </div>
+
+                <div class="header-buttons">
+
+                    <button class="btn-outline">
+                        Export Report
+                    </button>
+
+                    <button class="btn-primary">
+                        New Shortlist
+                    </button>
+
+                </div>
+
+            </section>
+
+            <!-- Filters -->
+
+            <form method="post" asp-controller="Dashboard" asp-action="ApplyFilters">
+
+                <section class="filters">
+
+                    <div class="filter">
+
+                        <label>Position</label>
+
+                        <select name="Position">
+
+                            <option value="ALL">ALL</option>
+                            <option value="GK">GK</option>
+                            <option value="DEF">DEF</option>
+                            <option value="MID">MID</option>
+                            <option value="FWD">FWD</option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="filter">
+
+                        <label>Age Range</label>
+
+                        <div class="age">
+
+                            <input type="number" name="MinAge" value="16">
+
+                            <span>-</span>
+
+                            <input type="number" name="MaxAge" value="35">
+
+                        </div>
+
+                    </div>
+
+                    <div class="filter">
+
+                        <label>Market Value</label>
+
+                        <select name="MarketValue">
+
+                            <option value="Any Value">Any Value</option>
+
+                            <option value="10M+">10M+</option>
+
+                            <option value="50M+">50M+</option>
+
+                            <option value="100M+">100M+</option>
+
+                        </select>
+
+                    </div>
+
+                    <button  class="apply-btn">
+                        Apply Intelligence Filters
+                    </button>
+
+                </section>
+
+            </form>
+
+            <!-- Table -->
+
+            <section class="table-section">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Player</th>
+
+                            <th>Position</th>
+
+                            <th>Club</th>
+
+                            <th>Age</th>
+
+                            <th>Market Value</th>
+
+                            <th>Rating</th>
+
+                        </tr>
+
+                    </thead>
+                    
+                    <tbody>
+
+                        @if (Model.Players.Any())
+                        {
+                            @foreach (var player in Model.Players)
+                            {
+                                <tr>
+                                    <td>@player.short_name</td>
+
+                                    <td>
+                                        @(player.position_group_GK == 1 ? "GK" :
+                                            player.position_group_DEF == 1 ? "DEF" :
+                                            player.position_group_MID == 1 ? "MID" :
+                                            player.position_group_ATT == 1 ? "ATT" : "-")
+                                    </td>
+
+                                    <td>-</td>
+
+                                    <td>@player.age</td>
+
+                                    <td>@player.market_value_eur</td>
+
+                                    <td>@player.overall</td>
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </section>
+
+            <!-- Cards -->
+
+            <section class="cards">
+
+                <div class="card">
+
+                    <h3>AVG. MARKET VALUE</h3>
+                    <h2>@Model.AverageMarketValue.ToString("N0") €</h2>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>VERIFIED PROFILES</h3>
+                    <h2>@Model.VerifiedProfiles</h2>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>ACTIVE SCOUTING REGIONS</h3>
+                    <h2>@Model.Players.Count</h2>
+
+                </div>
+                <div class="card">
+
+                    <h3>PREDICTED MARKET VALUE</h3>
+
+                    <h2>
+                        @Model.PredictedMarketValue.ToString("N0") €
+                    </h2>
+
+                </div>
+                @if (Model.BestPlayer != null)
+                {
+                    <div class="card">
+
+                        <h3>TOP SCOUT RECOMMENDATION</h3>
+
+                        <h2>@Model.BestPlayer.short_name</h2>
+
+                        <p>Overall: @Model.BestPlayer.overall</p>
+
+                        <p>Potential: @Model.BestPlayer.potential</p>
+
+                    </div>
+                }
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="~/js/index.js"></script>
+
+</body>
+</html>
