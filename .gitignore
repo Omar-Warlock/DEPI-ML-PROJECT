@@ -51,9 +51,9 @@ ML/data/raw/*
 !ML/data/processed/.gitkeep
 !ML/data/features/.gitkeep
 
-# Trained models and experiment outputs
-ML/models/*
-!ML/models/.gitkeep
+# # Trained models and experiment outputs
+# ML/models/*
+# !ML/models/.gitkeep
 
 # Notebook outputs and temporary downloads
 *.crdownload
