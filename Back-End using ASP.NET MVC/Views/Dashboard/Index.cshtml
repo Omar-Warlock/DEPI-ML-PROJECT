@@ -1,0 +1,336 @@
+﻿@model ScoutIQ.ViewModels.DashboardViewModel
+@using System.Linq
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Intelligence Dashboard - Scout IQ</title>
+
+    <link rel="stylesheet" href="~/css/dashboard.css" />
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+          rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>SCOUT IQ</h2>
+                <span>ELITE INTELLIGENCE</span>
+            </div>
+            <ul class="menu">
+                <li class="active">
+                    <a asp-controller="Dashboard" asp-action="Index">
+                        <i class="fa-solid fa-table-columns"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a asp-controller="Players" asp-action="Index">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Players</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a asp-controller="MarketAnalysis" asp-action="Index">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>Market Analysis</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a asp-controller="Reports" asp-action="Index">
+                        <i class="fa-solid fa-file-lines"></i>
+                        <span>Scouting Reports</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="settings">
+                <a href="settings.html">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+
+        <main class="content">
+            <!-- Navbar -->
+
+            <nav class="navbar">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input type="text"
+                           placeholder="Search players, leagues, or metrics..." />
+                </div>
+
+                <div class="nav-right">
+                    <i class="fa-solid fa-bell"></i>
+
+                    <i class="fa-solid fa-circle-question"></i>
+
+                    <div class="profile">
+                        <img src="https://i.pravatar.cc/50" alt="" />
+
+                        <div>
+                            <h4>Chief Scout</h4>
+
+                            <span>Premium Account</span>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Header -->
+
+            <section class="header">
+                <div>
+                    <h1>Intelligence Dashboard</h1>
+
+                    <p>Real-time market insights and clinical performance metrics.</p>
+                </div>
+
+                <div class="header-buttons">
+                    <button class="btn-outline">
+                        <i class="fa-solid fa-filter"></i>
+                        Global Filters
+                    </button>
+
+                    <button class="btn-primary">
+                        <i class="fa-solid fa-download"></i>
+                        Export Intel
+                    </button>
+                </div>
+            </section>
+
+            <!-- Top Row Stat Cards -->
+
+            <section class="cards">
+                <!-- Total Players -->
+                <div class="card stat-card">
+                    <div class="stat-top">
+                        <span class="stat-label">Total Players</span>
+                        <i class="fa-solid fa-database stat-icon"></i>
+                    </div>
+                    <div>
+                        <h2 class="stat-value">@Model.VerifiedProfiles</h2>
+                        <div class="stat-trend">
+                            <i class="fa-solid fa-arrow-trend-up"></i>
+                            12%
+                            <span>vs last window</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Average Value -->
+                <div class="card stat-card">
+                    <div class="stat-top">
+                        <span class="stat-label">Average Value by Position</span>
+                        <i class="fa-solid fa-sack-dollar stat-icon"></i>
+                    </div>
+                    <div>
+                        <h2 class="stat-value">
+                            @Model.AverageMarketValue.ToString("N0") €
+                        </h2>
+                        <div class="stat-trend info">
+                            <i class="fa-solid fa-circle-info"></i>
+                            Market Peak
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Undervalued Picks -->
+                <div class="card stat-card">
+                    <div class="stat-top">
+                        <span class="stat-label">Top 5 Undervalued Picks</span>
+                        <i class="fa-solid fa-circle-check stat-icon"></i>
+                    </div>
+                    <ul class="pick-list">
+                        <li>
+                            <span>Julian Alvarez</span>
+                            <span class="badge badge-green">+24% Value Potential</span>
+                        </li>
+                        <li>
+                            <span>Enzo Fernandez</span>
+                            <span class="badge badge-green">+18% Value Potential</span>
+                        </li>
+                        <li>
+                            <span>Moises Caicedo</span>
+                            <span class="badge badge-blue">Strategic Hold</span>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Central Content: Chart & Insight Grid -->
+
+            <section class="dashboard-grid">
+                <!-- Market Value Distribution Bar Chart -->
+                <div class="card chart-card">
+                    <div class="chart-head">
+                        <div>
+                            <h3>Market Value Distribution</h3>
+                            <p>By Tactical Position ($ USD)</p>
+                        </div>
+                        <div class="legend">
+                            <span class="legend-item">
+                                <span class="dot dot-primary"></span>
+                                Current
+                            </span>
+                            <span class="legend-item">
+                                <span class="dot dot-muted"></span>
+                                Projected
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="bar-chart">
+                        <!-- Forward -->
+                        <div class="bar-group">
+                            <div class="bar-track">
+                                <span class="bar-tooltip">$82.4M</span>
+                                <div class="bar-projected" style="height: 90%"></div>
+                                <div class="bar-current" style="height: 82%"></div>
+                            </div>
+                            <span class="bar-label">Forward</span>
+                        </div>
+
+                        <!-- Midfield -->
+                        <div class="bar-group">
+                            <div class="bar-track">
+                                <span class="bar-tooltip">$64.1M</span>
+                                <div class="bar-projected" style="height: 75%"></div>
+                                <div class="bar-current" style="height: 64%"></div>
+                            </div>
+                            <span class="bar-label">Midfield</span>
+                        </div>
+
+                        <!-- Defense -->
+                        <div class="bar-group">
+                            <div class="bar-track">
+                                <span class="bar-tooltip">$41.2M</span>
+                                <div class="bar-projected" style="height: 50%"></div>
+                                <div class="bar-current" style="height: 41%"></div>
+                            </div>
+                            <span class="bar-label">Defense</span>
+                        </div>
+
+                        <!-- Goalkeeper -->
+                        <div class="bar-group">
+                            <div class="bar-track">
+                                <span class="bar-tooltip">$18.9M</span>
+                                <div class="bar-projected" style="height: 30%"></div>
+                                <div class="bar-current" style="height: 18%"></div>
+                            </div>
+                            <span class="bar-label">GK</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Secondary Insight Column -->
+                <div class="insight-column">
+                    <div class="card insight-highlight">
+                        <div class="insight-top">
+                            <i class="fa-solid fa-bolt"></i>
+                            Active Scout Session
+                        </div>
+                        <p class="insight-text">
+                            34 scouts are currently observing the U21 Championship.
+                        </p>
+                        <div class="avatar-stack">
+                            <img src="https://i.pravatar.cc/64?img=12" alt="" />
+                            <img src="https://i.pravatar.cc/64?img=32" alt="" />
+                            <img src="https://i.pravatar.cc/64?img=45" alt="" />
+                            <div class="avatar-more">+31</div>
+                        </div>
+                    </div>
+
+                    <div class="card insight-metric">
+                        <h4>Clinical Metric of the Week</h4>
+                        <div class="metric-row">
+                            <div class="metric-icon">
+                                <i class="fa-solid fa-arrow-trend-up"></i>
+                            </div>
+                            <div>
+                                <div class="metric-title">Expected Goal Chain (xGC)</div>
+                                <p class="metric-sub">
+                                    New proprietary metric added for midfielders.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bottom Content: Recent Intelligence Feed -->
+
+            <section class="table-section">
+                <div class="table-head">
+                    <h3>Real-time Player Intelligence Feed</h3>
+                    <a href="#" class="view-link">View All Intelligence</a>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Player</th>
+                            <th>Club</th>
+                            <th>Efficiency</th>
+                            <th>Intelligence Rating</th>
+                            <th class="text-right">Market Delta</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @if (Model?.Players != null)
+                        {
+                            @foreach (var player in Model.Players.Take(10))
+                            {
+                                <tr>
+                                    <td>@player.name</td>
+
+                                    <td>@player.club</td>
+
+                                    <td>
+                                        <div class="progress-track">
+                                            <div class="progress-fill"
+                                                 style="width:@($"{player.Rating}%")">
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <span class="badge badge-blue">
+                                            @player.Rating.ToString("0")
+                                        </span>
+                                    </td>
+
+                                    <td class="text-right positive">
+
+
+                                        <td class="text-right @(player.MarketDelta >= 0 ? "positive" : "negative")">
+                                            @player.MarketDelta.ToString("N0") €
+                                        </td>
+
+
+                                  
+                                </tr>
+                            }
+                        }
+
+
+
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
