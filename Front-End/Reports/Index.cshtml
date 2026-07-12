@@ -1,0 +1,241 @@
+﻿@model ScoutIQ.ViewModels.ReportsViewModel
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scouting Reports - Scout IQ</title>
+
+    <link rel="stylesheet" href="~/css/reports.css" />
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+          rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>SCOUT IQ</h2>
+                <span>ELITE INTELLIGENCE</span>
+            </div>
+            <ul class="menu">
+                <li>
+                    <a asp-controller="Dashboard" asp-action="Index">
+                        <i class="fa-solid fa-table-columns"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a asp-controller="Players" asp-action="Index">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Players</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a asp-controller="MarketAnalysis" asp-action="Index">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>Market Analysis</span>
+                    </a>
+                </li>
+
+                <li class="active">
+                    <a asp-controller="Reports" asp-action="Index">
+                        <i class="fa-solid fa-file-lines"></i>
+                        <span>Scouting Reports</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="settings">
+                <a href="settings.html">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+
+        <main class="content">
+            <!-- Navbar -->
+
+            <nav class="navbar">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input type="text"
+                           placeholder="Search reports, players, or scouts..." />
+                </div>
+
+                <div class="nav-right">
+                    <i class="fa-solid fa-bell"></i>
+
+                    <i class="fa-solid fa-circle-question"></i>
+
+                    <div class="profile">
+                        <img src="https://i.pravatar.cc/50" alt="" />
+
+                        <div>
+                            <h4>Chief Scout</h4>
+
+                            <span>Premium Account</span>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Header -->
+
+            <section class="header">
+                <div>
+                    <h1>Scouting Reports</h1>
+
+                    <p>
+                        Clinical evaluation repository for elite recruitment pipelines.
+                    </p>
+                </div>
+
+                <div class="header-buttons">
+                    <button class="btn-primary">
+                        <i class="fa-solid fa-circle-plus"></i>
+                        Generate New Report
+                    </button>
+                </div>
+            </section>
+
+            <!-- Reports Layout -->
+
+            <div class="reports-layout">
+                <!-- Main Grid Section -->
+                <div class="reports-main">
+                    <!-- Filter / Stats Bar -->
+                    <div class="filter-bar">
+                        <div class="filter-tabs">
+                            <span class="tab-pill active">All Regions</span>
+                            <span class="tab-pill">U21 Only</span>
+                            <span class="tab-pill">High Potential</span>
+                        </div>
+                        <p class="file-count">Showing 154 Intelligence Files</p>
+                    </div>
+
+                    <!-- Report Cards Grid -->
+                    <div class="reports-grid">
+
+                        @foreach (var player in Model.TopRatedPlayers)
+                        {
+                            <div class="card report-card">
+
+                                <div>
+
+                                    <div class="report-top">
+
+                                        <span class="badge badge-blue">
+                                            @player.PositionName
+                                        </span>
+
+                                        <span class="report-date">
+                                            Age @player.age
+                                        </span>
+
+                                    </div>
+
+                                    <h3 class="report-name">
+                                        @player.name
+                                    </h3>
+
+                                    <div class="report-scout">
+                                        <i class="fa-solid fa-building"></i>
+
+                                        <p>
+                                            Club:
+                                            <span>@player.club</span>
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                                <div class="report-rating">
+
+                                    <p class="rating-label">
+                                        Scout Rating
+                                    </p>
+
+                                    <div class="rating-row">
+
+                                        <span class="rating-value">
+                                            @player.Rating
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        }
+
+                    </div> 
+                    <!-- reports-grid -->
+
+                </div>
+                <!-- reports-main -->
+                <!-- Recent Activity Sidebar -->
+
+                <aside class="reports-sidebar">
+                    <div class="card activity-card">
+                        <h4 class="activity-title">
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                            Recent Activity
+                        </h4>
+                            <div class="activity-list">
+
+                                @foreach (var player in Model.TopRatedPlayers.Take(3))
+                                {
+                                    <div class="activity-item">
+
+                                        <p class="activity-time">
+                                            @player.PositionName
+                                        </p>
+
+                                        <p class="activity-desc">
+                                            @player.name
+                                        </p>
+
+                                        <p class="activity-status">
+                                            Value:
+                                            <span class="status-green">
+                                                @player.market_value_in_eur.ToString("N0") €
+                                            </span>
+                                        </p>
+
+                                    </div>
+                                }
+
+                            </div>
+
+                        <button class="activity-btn">View All Intelligence Logs</button>
+                    </div>
+
+                    <!-- Market Context Card -->
+                    <div class="card context-card">
+                        <div class="context-top">
+                            <i class="fa-solid fa-chart-simple"></i>
+                            <span class="context-tag">Live Insight</span>
+                        </div>
+                        <h5 class="context-title">
+                            High-frequency scouting active in Ligue 1 regions.
+                        </h5>
+                        <p class="context-desc">
+                            Data indicates increased competitor presence at Toulouse FC
+                            matches.
+                        </p>
+                    </div>
+                </aside>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
+

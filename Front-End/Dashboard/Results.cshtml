@@ -1,0 +1,24 @@
+﻿@model List<ScoutIQ.Models.Player>
+
+<h2>Players Found</h2>
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Club</th>
+        <th>Position</th>
+        <th>Age</th>
+        <th>Market Value (€)</th>
+    </tr>
+
+    @foreach (var player in Model)
+    {
+        <tr>
+            <td>@player.name</td>
+            <td>@player.club</td>
+            <td>@player.position</td>
+            <td>@player.age</td>
+            <td>@player.market_value_in_eur.ToString("N0")</td>
+        </tr>
+    }
+</table>
