@@ -1,326 +1,262 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Scout IQ Dashboard</title>
 
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="index.css" />
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
-</head>
-<body>
-
-<div class="container">
-
-    <!-- Sidebar -->
-    <aside class="sidebar">
-
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
         <div class="logo">
-            <h2>SCOUT IQ</h2>
-            <span>ELITE INTELLIGENCE</span>
+          <h2>SCOUT IQ</h2>
+          <span>ELITE INTELLIGENCE</span>
         </div>
-
         <ul class="menu">
+          <li>
+            <a href="dashboard.html">
+              <i class="fa-solid fa-table-columns"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
 
-            <li>
-                <a href="#">
-                    <i class="fa-solid fa-table-columns"></i>
-                    Dashboard
-                </a>
-            </li>
+          <li class="active">
+            <a href="index.html">
+              <i class="fa-solid fa-users"></i>
+              <span>Players</span>
+            </a>
+          </li>
 
-            <li class="active">
-                <a href="#">
-                    <i class="fa-solid fa-users"></i>
-                    Players
-                </a>
-            </li>
+          <li>
+            <a href="market.html">
+              <i class="fa-solid fa-chart-line"></i>
+              <span>Market Analysis</span>
+            </a>
+          </li>
 
-            <li>
-                <a href="#">
-                    <i class="fa-solid fa-chart-line"></i>
-                    Market Analysis
-                </a>
-            </li>
-
-            <li>
-                <a href="#">
-                    <i class="fa-solid fa-file-lines"></i>
-                    Scouting Reports
-                </a>
-            </li>
-
+          <li>
+            <a href="reports.html">
+              <i class="fa-solid fa-file-lines"></i>
+              <span>Scouting Reports</span>
+            </a>
+          </li>
         </ul>
 
         <div class="settings">
-            <a href="#">
-                <i class="fa-solid fa-gear"></i>
-                Settings
-            </a>
+          <a href="settings.html">
+            <i class="fa-solid fa-gear"></i>
+            <span>Settings</span>
+          </a>
         </div>
+      </aside>
 
-    </aside>
+      <!-- Main Content -->
 
-    <!-- Main Content -->
-
-    <main class="content">
-
+      <main class="content">
         <!-- Navbar -->
 
         <nav class="navbar">
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
 
-            <div class="search-box">
+            <input
+              type="text"
+              placeholder="Search elite talent, clubs or regions..."
+            />
+          </div>
 
-                <i class="fa-solid fa-magnifying-glass"></i>
+          <div class="nav-right">
+            <i class="fa-solid fa-bell"></i>
 
-                <input type="text" placeholder="Search elite talent, clubs or regions...">
+            <i class="fa-solid fa-circle-question"></i>
 
+            <div class="profile">
+              <img src="https://i.pravatar.cc/50" alt="" />
+
+              <div>
+                <h4>Chief Scout</h4>
+
+                <span>Premium Account</span>
+              </div>
             </div>
-
-            <div class="nav-right">
-
-                <i class="fa-solid fa-bell"></i>
-
-                <i class="fa-solid fa-circle-question"></i>
-
-                <div class="profile">
-
-                    <img src="https://i.pravatar.cc/50" alt="">
-
-                    <div>
-
-                        <h4>Chief Scout</h4>
-
-                        <span>Premium Account</span>
-
-                    </div>
-
-                </div>
-
-            </div>
-
+          </div>
         </nav>
 
         <!-- Header -->
 
         <section class="header">
+          <div>
+            <h1>Player Intelligence Database</h1>
 
-            <div>
+            <p>
+              Cross-referencing 42,000+ professional profiles with clinical
+              precision.
+            </p>
+          </div>
 
-                <h1>Player Intelligence Database</h1>
+          <div class="header-buttons">
+            <button class="btn-outline">Export Report</button>
 
-                <p>Cross-referencing 42,000+ professional profiles with clinical precision.</p>
-
-            </div>
-
-            <div class="header-buttons">
-
-                <button class="btn-outline">
-                    Export Report
-                </button>
-
-                <button class="btn-primary">
-                    New Shortlist
-                </button>
-
-            </div>
-
+            <button class="btn-primary">New Shortlist</button>
+          </div>
         </section>
 
         <!-- Filters -->
 
         <section class="filters">
+          <div class="filter">
+            <label>Position</label>
 
-            <div class="filter">
-
-                <label>Position</label>
-
-                <div class="positions">
-
-                    <button class="active">ALL</button>
-                    <button>GK</button>
-                    <button>DEF</button>
-                    <button>MID</button>
-                    <button>FWD</button>
-
-                </div>
-
+            <div class="positions">
+              <button class="active">ALL</button>
+              <button>GK</button>
+              <button>DEF</button>
+              <button>MID</button>
+              <button>FWD</button>
             </div>
+          </div>
 
-            <div class="filter">
+          <div class="filter">
+            <label>Age Range</label>
 
-                <label>Age Range</label>
+            <div class="age">
+              <input type="number" value="16" />
 
-                <div class="age">
+              <span>-</span>
 
-                    <input type="number" value="16">
-
-                    <span>-</span>
-
-                    <input type="number" value="35">
-
-                </div>
-
+              <input type="number" value="35" />
             </div>
+          </div>
 
-            <div class="filter">
+          <div class="filter">
+            <label>Market Value</label>
 
-                <label>Market Value</label>
+            <select>
+              <option>Any Value</option>
 
-                <select>
+              <option>10M+</option>
 
-                    <option>Any Value</option>
+              <option>50M+</option>
 
-                    <option>10M+</option>
+              <option>100M+</option>
+            </select>
+          </div>
 
-                    <option>50M+</option>
-
-                    <option>100M+</option>
-
-                </select>
-
-            </div>
-
-            <button class="apply-btn">
-                Apply Intelligence Filters
-            </button>
-
+          <button class="apply-btn">Apply Intelligence Filters</button>
         </section>
 
         <!-- Table -->
 
         <section class="table-section">
+          <table>
+            <thead>
+              <tr>
+                <th>Player</th>
 
-            <table>
+                <th>Position</th>
 
-                <thead>
+                <th>Club</th>
 
-                <tr>
+                <th>Age</th>
 
-                    <th>Player</th>
+                <th>Market Value</th>
 
-                    <th>Position</th>
+                <th>Rating</th>
+              </tr>
+            </thead>
 
-                    <th>Club</th>
+            <tbody>
+              <tr>
+                <td>Marcus Bellingham</td>
 
-                    <th>Age</th>
+                <td>CM</td>
 
-                    <th>Market Value</th>
+                <td>Real Madrid</td>
 
-                    <th>Rating</th>
+                <td>20</td>
 
-                </tr>
+                <td>€180,000,000</td>
 
-                </thead>
+                <td>9.8</td>
+              </tr>
 
-                <tbody>
+              <tr>
+                <td>Rafael Leão</td>
 
-                <tr>
+                <td>LW</td>
 
-                    <td>Marcus Bellingham</td>
+                <td>AC Milan</td>
 
-                    <td>CM</td>
+                <td>24</td>
 
-                    <td>Real Madrid</td>
+                <td>€90,000,000</td>
 
-                    <td>20</td>
+                <td>9.1</td>
+              </tr>
 
-                    <td>€180,000,000</td>
+              <tr>
+                <td>Warren Zaïre-Emery</td>
 
-                    <td>9.8</td>
+                <td>DM</td>
 
-                </tr>
+                <td>PSG</td>
 
-                <tr>
+                <td>17</td>
 
-                    <td>Rafael Leão</td>
+                <td>€60,000,000</td>
 
-                    <td>LW</td>
+                <td>8.8</td>
+              </tr>
 
-                    <td>AC Milan</td>
+              <tr>
+                <td>Alessandro Bastoni</td>
 
-                    <td>24</td>
+                <td>CB</td>
 
-                    <td>€90,000,000</td>
+                <td>Inter Milan</td>
 
-                    <td>9.1</td>
+                <td>24</td>
 
-                </tr>
+                <td>€70,000,000</td>
 
-                <tr>
-
-                    <td>Warren Zaïre-Emery</td>
-
-                    <td>DM</td>
-
-                    <td>PSG</td>
-
-                    <td>17</td>
-
-                    <td>€60,000,000</td>
-
-                    <td>8.8</td>
-
-                </tr>
-
-                <tr>
-
-                    <td>Alessandro Bastoni</td>
-
-                    <td>CB</td>
-
-                    <td>Inter Milan</td>
-
-                    <td>24</td>
-
-                    <td>€70,000,000</td>
-
-                    <td>8.5</td>
-
-                </tr>
-
-                </tbody>
-
-            </table>
-
+                <td>8.5</td>
+              </tr>
+            </tbody>
+          </table>
         </section>
 
         <!-- Cards -->
 
         <section class="cards">
+          <div class="card">
+            <h3>AVG. MARKET VALUE</h3>
 
-            <div class="card">
+            <h2>€14.2M</h2>
+          </div>
 
-                <h3>AVG. MARKET VALUE</h3>
+          <div class="card">
+            <h3>VERIFIED PROFILES</h3>
 
-                <h2>€14.2M</h2>
+            <h2>12,842</h2>
+          </div>
 
-            </div>
+          <div class="card">
+            <h3>ACTIVE SCOUTING REGIONS</h3>
 
-            <div class="card">
-
-                <h3>VERIFIED PROFILES</h3>
-
-                <h2>12,842</h2>
-
-            </div>
-
-            <div class="card">
-
-                <h3>ACTIVE SCOUTING REGIONS</h3>
-
-                <h2>54</h2>
-
-            </div>
-
+            <h2>54</h2>
+          </div>
         </section>
+      </main>
+    </div>
 
-    </main>
-
-</div>
-
-<script src="index.js"></script>
-
-</body>
+    <script src="index.js"></script>
+  </body>
 </html>

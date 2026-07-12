@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Market Analysis - Scout IQ</title>
+
+    <link rel="stylesheet" href="market.css" />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="logo">
+          <h2>SCOUT IQ</h2>
+          <span>ELITE INTELLIGENCE</span>
+        </div>
+        <ul class="menu">
+          <li>
+            <a href="dashboard.html">
+              <i class="fa-solid fa-table-columns"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="index.html">
+              <i class="fa-solid fa-users"></i>
+              <span>Players</span>
+            </a>
+          </li>
+
+          <li class="active">
+            <a href="market.html">
+              <i class="fa-solid fa-chart-line"></i>
+              <span>Market Analysis</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="reports.html">
+              <i class="fa-solid fa-file-lines"></i>
+              <span>Scouting Reports</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="settings">
+          <a href="settings.html">
+            <i class="fa-solid fa-gear"></i>
+            <span>Settings</span>
+          </a>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+
+      <main class="content">
+        <!-- Navbar -->
+
+        <nav class="navbar">
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+              type="text"
+              placeholder="Search markets, leagues, or financial data..."
+            />
+          </div>
+
+          <div class="nav-right">
+            <i class="fa-solid fa-bell"></i>
+
+            <i class="fa-solid fa-circle-question"></i>
+
+            <div class="profile">
+              <img src="https://i.pravatar.cc/50" alt="" />
+
+              <div>
+                <h4>Chief Scout</h4>
+
+                <span>Premium Account</span>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <!-- Header -->
+
+        <section class="header">
+          <div>
+            <h1>Market Analysis</h1>
+
+            <p>Quarterly Financial Review &amp; Strategic Volatility Index</p>
+          </div>
+
+          <div class="header-buttons">
+            <button class="btn-outline">
+              <i class="fa-solid fa-download"></i>
+              Download Report
+            </button>
+
+            <button class="btn-primary">
+              <i class="fa-solid fa-sliders"></i>
+              Customize View
+            </button>
+          </div>
+        </section>
+
+        <!-- Summary Cards -->
+
+        <section class="cards">
+          <!-- Total Market Value -->
+          <div class="card">
+            <div class="summary-top">
+              <h3>Total Market Value</h3>
+              <i class="fa-solid fa-sack-dollar summary-icon"></i>
+            </div>
+            <div class="summary-value-row">
+              <h2>€14.82B</h2>
+              <span class="badge badge-green">+4.2%</span>
+            </div>
+            <p class="summary-desc">
+              Combined valuation of top 5 European leagues based on Scout IQ
+              Proprietary Index.
+            </p>
+          </div>
+
+          <!-- Value Trend -->
+          <div class="card">
+            <div class="summary-top">
+              <h3>Value Trend</h3>
+              <i class="fa-solid fa-arrow-trend-up summary-icon"></i>
+            </div>
+            <div class="summary-value-row">
+              <h2>Bullish</h2>
+              <i class="fa-solid fa-arrow-up-right trend-up"></i>
+            </div>
+            <p class="summary-desc">
+              Macro-market indicator showing upward momentum in young talent
+              valuations (U21).
+            </p>
+          </div>
+
+          <!-- Avg Club Value -->
+          <div class="card">
+            <div class="summary-top">
+              <h3>Avg Club Value</h3>
+              <i class="fa-solid fa-building-columns summary-icon"></i>
+            </div>
+            <div class="summary-value-row">
+              <h2>€422.5M</h2>
+              <span class="badge badge-gray">Stable</span>
+            </div>
+            <p class="summary-desc">
+              Median valuation per club across monitored datasets, excluding
+              outliers.
+            </p>
+          </div>
+        </section>
+
+        <!-- Main Chart Area -->
+
+        <section class="card chart-card">
+          <div class="chart-head">
+            <div>
+              <h3>Market Value Volatility</h3>
+              <p>12-Month Recursive Analysis (2023-2024)</p>
+            </div>
+            <div class="legend">
+              <span class="legend-item">
+                <span class="dot dot-primary"></span>
+                Current Year
+              </span>
+              <span class="legend-item">
+                <span class="dot dot-muted"></span>
+                Historical Avg
+              </span>
+            </div>
+          </div>
+
+          <div class="line-chart">
+            <svg viewBox="0 0 1000 300" preserveAspectRatio="none">
+              <!-- Background Grid -->
+              <line class="grid-line" x1="0" x2="1000" y1="0" y2="0" />
+              <line class="grid-line" x1="0" x2="1000" y1="75" y2="75" />
+              <line class="grid-line" x1="0" x2="1000" y1="150" y2="150" />
+              <line class="grid-line" x1="0" x2="1000" y1="225" y2="225" />
+              <line class="grid-line" x1="0" x2="1000" y1="300" y2="300" />
+              <!-- Main Data Line -->
+              <path
+                d="M0,200 L100,180 L200,220 L300,140 L400,160 L500,80 L600,110 L700,40 L800,90 L900,60 L1000,20"
+                fill="none"
+                stroke="#2563eb"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="3"
+              />
+              <!-- Data Points -->
+              <circle cx="0" cy="200" r="4" fill="#fff" stroke="#2563eb" stroke-width="2" />
+              <circle cx="300" cy="140" r="4" fill="#fff" stroke="#2563eb" stroke-width="2" />
+              <circle cx="500" cy="80" r="4" fill="#fff" stroke="#2563eb" stroke-width="2" />
+              <circle cx="700" cy="40" r="4" fill="#fff" stroke="#2563eb" stroke-width="2" />
+              <circle cx="1000" cy="20" r="4" fill="#fff" stroke="#2563eb" stroke-width="2" />
+            </svg>
+          </div>
+
+          <div class="month-labels">
+            <span class="month-label">SEP</span>
+            <span class="month-label">OCT</span>
+            <span class="month-label">NOV</span>
+            <span class="month-label highlight">DEC</span>
+            <span class="month-label">JAN</span>
+            <span class="month-label">FEB</span>
+            <span class="month-label">MAR</span>
+            <span class="month-label highlight">APR</span>
+            <span class="month-label">MAY</span>
+            <span class="month-label">JUN</span>
+            <span class="month-label">JUL</span>
+            <span class="month-label">AUG</span>
+          </div>
+        </section>
+
+        <!-- High Growth Clusters -->
+
+        <section class="clusters-section">
+          <h3 class="section-title">High Growth Clusters</h3>
+          <div class="clusters-grid">
+            <!-- Cluster Card 1 -->
+            <div class="cluster-card">
+              <div class="cluster-top">
+                <div class="cluster-icon">
+                  <i class="fa-solid fa-futbol"></i>
+                </div>
+                <div>
+                  <div class="cluster-name">Liga Portugal</div>
+                  <div class="cluster-type">League Index</div>
+                </div>
+              </div>
+              <div class="cluster-bottom">
+                <div>
+                  <div class="cluster-value">+18.4%</div>
+                  <div class="cluster-growth-label">Net Growth</div>
+                </div>
+                <a href="#" class="cluster-link">Details →</a>
+              </div>
+            </div>
+
+            <!-- Cluster Card 2 -->
+            <div class="cluster-card">
+              <div class="cluster-top">
+                <div class="cluster-icon">
+                  <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div>
+                  <div class="cluster-name">Defensive Mid (U21)</div>
+                  <div class="cluster-type">Position Group</div>
+                </div>
+              </div>
+              <div class="cluster-bottom">
+                <div>
+                  <div class="cluster-value">+24.1%</div>
+                  <div class="cluster-growth-label">Net Growth</div>
+                </div>
+                <a href="#" class="cluster-link">Details →</a>
+              </div>
+            </div>
+
+            <!-- Cluster Card 3 -->
+            <div class="cluster-card">
+              <div class="cluster-top">
+                <div class="cluster-icon">
+                  <i class="fa-solid fa-earth-americas"></i>
+                </div>
+                <div>
+                  <div class="cluster-name">Brazilian Serie A</div>
+                  <div class="cluster-type">Emerging Market</div>
+                </div>
+              </div>
+              <div class="cluster-bottom">
+                <div>
+                  <div class="cluster-value">+12.7%</div>
+                  <div class="cluster-growth-label">Net Growth</div>
+                </div>
+                <a href="#" class="cluster-link">Details →</a>
+              </div>
+            </div>
+
+            <!-- Cluster Card 4 -->
+            <div class="cluster-card">
+              <div class="cluster-top">
+                <div class="cluster-icon">
+                  <i class="fa-solid fa-bolt"></i>
+                </div>
+                <div>
+                  <div class="cluster-name">Inverted Wingers</div>
+                  <div class="cluster-type">Tactical Profile</div>
+                </div>
+              </div>
+              <div class="cluster-bottom">
+                <div>
+                  <div class="cluster-value">+31.2%</div>
+                  <div class="cluster-growth-label">Net Growth</div>
+                </div>
+                <a href="#" class="cluster-link">Details →</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Market Depth -->
+
+        <section class="depth-grid">
+          <div class="liquidity-card">
+            <div class="liquidity-head">
+              <h4>Market Liquidity by Region</h4>
+              <a href="#" class="view-all-btn">
+                Full Spreadsheet
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>
+            </div>
+
+            <div class="region-rows">
+              <!-- Region Row 1 -->
+              <div>
+                <div class="region-row-head">
+                  <span>Western Europe</span>
+                  <span>€9.2B (62%)</span>
+                </div>
+                <div class="region-bar-track">
+                  <div class="region-bar-fill" style="width: 62%"></div>
+                </div>
+              </div>
+
+              <!-- Region Row 2 -->
+              <div>
+                <div class="region-row-head">
+                  <span>South America</span>
+                  <span>€2.1B (14%)</span>
+                </div>
+                <div class="region-bar-track">
+                  <div class="region-bar-fill" style="width: 14%"></div>
+                </div>
+              </div>
+
+              <!-- Region Row 3 -->
+              <div>
+                <div class="region-row-head">
+                  <span>North America (MLS)</span>
+                  <span>€1.4B (9%)</span>
+                </div>
+                <div class="region-bar-track">
+                  <div class="region-bar-fill" style="width: 9%"></div>
+                </div>
+              </div>
+
+              <!-- Region Row 4 -->
+              <div>
+                <div class="region-row-head">
+                  <span>Middle East / Asia</span>
+                  <span>€1.1B (7%)</span>
+                </div>
+                <div class="region-bar-track">
+                  <div class="region-bar-fill" style="width: 7%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Intelligence Feed -->
+          <div class="intel-card">
+            <h4 class="intel-title">
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
+              Market Pulse
+            </h4>
+            <div class="intel-list">
+              <div class="intel-item alert">
+                <p class="intel-label">Intelligence Alert</p>
+                <p class="intel-text">
+                  Hyper-inflation detected in Scandinavian youth markets. 12%
+                  rise in 48h.
+                </p>
+              </div>
+              <div class="intel-item">
+                <p class="intel-label">Transaction Node</p>
+                <p class="intel-text">
+                  Chelsea FC valuation model adjusted following mid-quarter
+                  capital injection.
+                </p>
+              </div>
+              <div class="intel-item">
+                <p class="intel-label">Forecast Shift</p>
+                <p class="intel-text">
+                  Ligue 1 broadcasting rights negotiations impacting
+                  bottom-tier valuations by -5%.
+                </p>
+              </div>
+            </div>
+            <div class="intel-image-wrap">
+              <img
+                class="intel-image"
+                alt="Data Visualization"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPWpPzdFvKtB8aZF2Y8SUNi7UsMLBfSW-sNcWtBMeG2F26jM4td0yRPqtKAISGO3WFhKNL0LLueqaBw0eF-LM_AmE2-spmiIwEE0V_kqkOtzq8phibEMnUw0b0edDc-CPFfiII6U-eAs59CuXBXuENa_0bKYPMkSHh_e141TlCey0yhf-4TXXkFXK6hyLvIpPy6qWU6iCjJF6K11Y7GY-QVWE2oCinqCblfSXiZ8ekGb-2OHYRWHulf_yrm8E9NSpoMdOhwmJB4cY"
+              />
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
