@@ -201,8 +201,8 @@
                         </div>
 
                     </div>
-                   
-                    <div class="filter">
+                    
+                             <div class="filter">
 
                         <label>Market Value</label>
 
@@ -213,11 +213,11 @@
                             </option>
 
                             <option value="15M+" selected="@(Model.SelectedMarketValue == "15M+")">
-                                15M+
+                                15M - 25M
                             </option>
 
                             <option value="25M+" selected="@(Model.SelectedMarketValue == "25M+")">
-                                25M+
+                                25M - 35M
                             </option>
 
                             <option value="35M+" selected="@(Model.SelectedMarketValue == "35M+")">
@@ -227,6 +227,8 @@
                         </select>
 
                     </div>
+
+
 
                     <button type="submit" class="apply-btn">
                         Apply Intelligence Filters
